@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "config-reporter.fullname" . }}
+  labels:
+    {{- include "config-reporter.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: metrics
+  selector:
+    {{- include "config-reporter.selectorLabels" . | nindent 4 }}
